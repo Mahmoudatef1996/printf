@@ -13,6 +13,7 @@ int _printf(const char *format, ...)
 	va_list args;
 	int count = 0;
 	char *c;
+	char x;
 
 	va_start(args, format);
 	for (c = (char *)format; *c; c++)
@@ -30,18 +31,19 @@ int _printf(const char *format, ...)
 		}
 		else
         {
-            switch (*(p + 1))
+		switch(*(c+1))
             {
                 case 'c':
-                    write(STDOUT_FILENO, &va_arg(args, int), 1);
-                    break;
+			x = va_arg(args, int);
+                    write(STDOUT_FILENO,&x, 1);
+			break;
                 case 's':
                     count += _puts(va_arg(args, char *));
                     break;
                 default:
                     break;
             }
-            p++;
+            c++;
             count++;
         }
     }
